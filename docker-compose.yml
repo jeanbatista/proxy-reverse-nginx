@@ -1,0 +1,42 @@
+version: "3.3"
+
+services:
+  api-01:
+    container_name: api-01-container
+    image: node:14
+    working_dir: /usr/src/app
+    restart: always
+    command: bash -c "npm install --only=prod && npm start"
+    volumes:
+      - ./api_01/server.js:/usr/src/app/server.js
+      - ./api_01/package.json:/usr/src/app/package.json
+
+  api-02:
+    container_name: api-02-container
+    image: node:14
+    working_dir: /usr/src/app
+    restart: always
+    command: bash -c "npm install --only=prod && npm start"
+    volumes:
+      - ./api_02/server.js:/usr/src/app/server.js
+      - ./api_02/package.json:/usr/src/app/package.json
+
+  api-03:
+    container_name: api-03-container
+    image: node:14
+    working_dir: /usr/src/app
+    restart: always
+    command: bash -c "npm install --only=prod && npm start"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./api_03/server.js:/usr/src/app/server.js
+      - ./api_03/package.json:/usr/src/app/package.json
+
+  web:
+    container_name: web-container
+    image: nginx:1.20
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
